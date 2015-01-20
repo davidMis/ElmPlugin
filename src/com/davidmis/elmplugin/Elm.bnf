@@ -1,0 +1,20 @@
+{
+  parserClass="com.davidmis.elmplugin.parser.ElmParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Elm"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.davidmis.elmplugin.psi"
+  psiImplPackage="com.davidmis.elmplugin.psi.impl"
+
+  elementTypeHolderClass="com.davidmis.elmplugin.psi.ElmTypes"
+  elementTypeClass="com.davidmis.elmplugin.psi.ElmElementType"
+  tokenTypeClass="com.davidmis.elmplugin.psi.ElmTokenType"
+}
+
+elmFile ::= item_*
+
+private item_ ::= (COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY

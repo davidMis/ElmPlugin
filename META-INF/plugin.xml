@@ -30,6 +30,7 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="com.davidmis.elmplugin.ElmFileTypeFactory"/>
+    <lang.parserDefinition language="Elm" implementationClass="com.davidmis.elmplugin.ElmParserDefinition"/>
   </extensions>
 
   <application-components>
