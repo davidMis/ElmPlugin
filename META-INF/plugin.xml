@@ -1,0 +1,47 @@
+<idea-plugin version="2">
+  <id>com.davidmis.elmplugin</id>
+  <name>Elm Language Plugin</name>
+  <version>0.1</version>
+  <vendor email="d.mis@gmail.com" url="http://davidmis.com">David Mis</vendor>
+
+  <description><![CDATA[
+      Support for Elm language.<br>
+      This plugin is still in development. It currently only supports syntax highlighting.
+    ]]></description>
+
+  <change-notes><![CDATA[
+      Version 0.1
+      <ul>
+        <li>Initial version.</li>
+        <li>File recognition</li>
+        <li>Basic syntax highlighting<li>
+      </ul>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="131"/>
+
+  <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <fileTypeFactory implementation="com.davidmis.elmplugin.ElmFileTypeFactory"/>
+  </extensions>
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>
