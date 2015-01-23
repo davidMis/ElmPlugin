@@ -15,6 +15,6 @@
 
 elmFile ::= item_*
 
-private item_ ::= (COMMENT|CRLF)
+private item_ ::= (COMMENT|CRLF|WAITING)
 
 property ::= (KEY? SEPARATOR VALUE?) | KEY

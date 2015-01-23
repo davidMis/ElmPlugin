@@ -31,6 +31,8 @@
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="com.davidmis.elmplugin.ElmFileTypeFactory"/>
     <lang.parserDefinition language="Elm" implementationClass="com.davidmis.elmplugin.ElmParserDefinition"/>
+    <lang.syntaxHighlighterFactory key="Elm" implementationClass="com.davidmis.elmplugin.ElmSyntaxHighlighterFactory"/>
+    <colorSettingsPage implementation="com.davidmis.elmplugin.ElmColorSettingsPage"/>
   </extensions>
 
   <application-components>

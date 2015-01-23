@@ -7,6 +7,10 @@ import com.intellij.psi.TokenType;
 
 %%
 
+%{
+    int commentLevel = 0;
+%}
+
 %class ElmLexer
 %implements FlexLexer
 %unicode
@@ -17,12 +21,29 @@ import com.intellij.psi.TokenType;
 
 CRLF = \n|\r|\r\n
 SINGLE_LINE_COMMENT = ("--") [^\r\n]*
-COMMENT = {SINGLE_LINE_COMMENT}
+START_COMMENT = ("{--")
+END_COMMENT = ("--}")
+
+%xstate INCOMMENT
 
 %%
 
-<YYINITIAL> {COMMENT}                                       { yybegin(YYINITIAL); return ElmTypes.COMMENT; }
+<YYINITIAL> {SINGLE_LINE_COMMENT}                           { return ElmTypes.COMMENT; }
+
+<YYINITIAL, INCOMMENT> {START_COMMENT}                      { yybegin(INCOMMENT);
+                                                              commentLevel += 1;
+                                                              yypushback(2);
+                                                              return ElmTypes.COMMENT; }
+
+<INCOMMENT> . | {CRLF}                               { yybegin(INCOMMENT);return ElmTypes.COMMENT; }
+
+<INCOMMENT> {END_COMMENT}                                   { yybegin(INCOMMENT);
+                                                              commentLevel -= 1;
+                                                              if(commentLevel <= 0) { yybegin(YYINITIAL); }
+                                                              return ElmTypes.COMMENT; }
+
+
 
 {CRLF}                                                      { yybegin(YYINITIAL); return ElmTypes.CRLF; }
 
-.*                                                          { return TokenType.BAD_CHARACTER; }
+.                                                           { return ElmTypes.WAITING; }
