@@ -13,11 +13,13 @@ public class ElmError {
     private int startIndex;
     private int endIndex;
 
-    public ElmError(int line, int startCol, int endCol, String message) {
+    public ElmError(int line, int startCol, int endCol, String message, Document document) {
         this.line = line;
         this.startCol = startCol;
         this.endCol = endCol;
         this.message = message;
+
+        setIndecis(document);
     }
 
     public int getLine() {
@@ -40,7 +42,7 @@ public class ElmError {
         return startIndex;
     }
 
-    public void setStartIndex(Document document) {
+    private void setStartIndex(Document document) {
         this.startIndex = document.getLineStartOffset(this.line) + this.startCol;
     }
 
@@ -48,11 +50,11 @@ public class ElmError {
         return endIndex;
     }
 
-    public void setEndIndex(Document document) {
+    private void setEndIndex(Document document) {
         this.endIndex = document.getLineStartOffset(this.line) + this.endCol;
     }
 
-    public void setIndecis(Document document) {
+    private void setIndecis(Document document) {
         setStartIndex(document);
         setEndIndex(document);
     }

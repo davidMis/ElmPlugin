@@ -33,15 +33,38 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
     @Nullable
     public List<ElmError> doAnnotate(InitialInfo info) {
         System.out.println("Checking: " + info.path + "    ---------------------------------------");
-        System.out.println(ElmChecker.instance.getCompilerOutput(info.path));
+        String compilerOutput = ElmChecker.instance.getCompilerOutput(info.path);
+        System.out.println(compilerOutput);
         System.out.println("------------------------------------------------------");
 
+
+//        List<ElmError> errors = new LinkedList<ElmError>();
+//
+//        ElmError testError = new ElmError(2,3,5,"Test error");
+//        testError.setIndecis(info.document);
+//
+//        errors.add(testError);
+
+        return getErrors(compilerOutput, info.document);
+    }
+
+    private List<ElmError> getErrors(String compilerOutput, Document document) {
         List<ElmError> errors = new LinkedList<ElmError>();
 
-        ElmError testError = new ElmError(2,3,5,"Test error");
-        testError.setIndecis(info.document);
+        String[] lines = compilerOutput.split("\n");
+        for(int i = 0; i < lines.length; i++) {
+            String line = lines[i];
+            if(line.startsWith("Error on line")) {
+                int errLine = Integer.parseInt(line.split("line ")[1].split(",")[0]) - 1;
+                int errStartCol = Integer.parseInt(line.split("column ")[1].split(" to")[0]) - 1;
+                int errEndCol = Integer.parseInt(line.split("to ")[1].split(":")[0]) - 1;
+                String errMessage = lines[i+1];
+                i += 1;
 
-        errors.add(testError);
+                errors.add(new ElmError(errLine, errStartCol, errEndCol, errMessage, document));
+
+            }
+        }
 
         return errors;
     }
