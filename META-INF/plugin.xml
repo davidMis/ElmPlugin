@@ -33,6 +33,8 @@
     <lang.parserDefinition language="Elm" implementationClass="com.davidmis.elmplugin.ElmParserDefinition"/>
     <lang.syntaxHighlighterFactory key="Elm" implementationClass="com.davidmis.elmplugin.ElmSyntaxHighlighterFactory"/>
     <colorSettingsPage implementation="com.davidmis.elmplugin.ElmColorSettingsPage"/>
+
+    <externalAnnotator language="Elm" implementationClass="com.davidmis.elmplugin.ElmExternalAnnotator"/>
   </extensions>
 
   <application-components>
