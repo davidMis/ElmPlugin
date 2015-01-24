@@ -15,14 +15,21 @@
 
 elmFile ::= (declaration|statement|COMMENT|CRLF|WHITESPACE|WAITING)*
 
-declaration ::= IDENTIFIER WHITESPACE? COLON WHITESPACE? type
+declaration ::= IDENTIFIER WHITESPACE? COLON WHITESPACE? declaration_lhs
 
-type ::= IDENTIFIER (WHITESPACE? ARROW WHITESPACE? type)*
+declaration_lhs ::= IDENTIFIER (WHITESPACE? ARROW WHITESPACE? declaration_lhs)*
 
-statement ::= IDENTIFIER WHITESPACE? EQUALS WHITESPACE? expression
+statement ::= assignment | import_statement
+assignment ::= IDENTIFIER WHITESPACE? EQUALS WHITESPACE? expression
+import_statement ::= IMPORT WHITESPACE library_name
+library_name ::= IDENTIFIER (DOT IDENTIFIER)* WHITESPACE? library_list?
+library_list ::= LPAREN WHITESPACE? DOTDOT WHITESPACE? RPAREN
 
-expression ::= if_expression|simple_expression
-simple_expression ::= IDENTIFIER|NUMBER
-if_expression ::= IF WHITESPACE expression WHITESPACE THEN WHITESPACE expression WHITESPACE ELSE WHITESPACE expression
+expression ::= if_ex | simple_ex
+simple_ex ::= IDENTIFIER|NUMBER
+if_ex ::= IF WHITESPACE expression WHITESPACE THEN WHITESPACE expression WHITESPACE ELSE WHITESPACE expression
 
 property ::= (KEY? SEPARATOR VALUE?) | KEY
+
+reserved ::= IF | THEN | ELSE | CASE | OF | LET | IN | DATA | TYPE | MODULE |
+             WHERE  | IMPORT |  AS | HIDING | OPEN | EXPORT | FOREIGN

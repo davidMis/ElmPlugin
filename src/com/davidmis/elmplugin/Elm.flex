@@ -32,7 +32,7 @@ import java.util.LinkedList;
 %eof}
 
 CRLF = (\n|\r|\r\n)+
-WHITESPACE = {CRLF} | [ \t\f]*
+WHITESPACE = ({CRLF} | [ \t\f])*
 
 /* Comments */
 SINGLE_LINE_COMMENT = ("--") [^\r\n]*
@@ -48,8 +48,7 @@ END_COMMENT = ("--}")
 /* General */
 IDENTIFIER = [:letter:] [A-Za-z0-9'_]*
 NUMBER = [0-9]* | ([0-9]* [.]+ [0-9]+)
-//RESERVED = "if"     | "then" | "else" | "case" | "of" |"let" | "in" |"data" | "type" | "module" |
-//           "where"  |"import" |  "as" | "hiding" | "open" |"export" | "foreign"
+
 
 
 %xstate INCOMMENT
@@ -79,8 +78,27 @@ NUMBER = [0-9]* | ([0-9]* [.]+ [0-9]+)
 <YYINITIAL> "if"                                      { return ElmTypes.IF; }
 <YYINITIAL> "then"                                      { return ElmTypes.THEN; }
 <YYINITIAL> "else"                                      { return ElmTypes.ELSE; }
+<YYINITIAL> "case"                                      { return ElmTypes.CASE; }
+<YYINITIAL> "of"                                      { return ElmTypes.OF; }
+<YYINITIAL> "in"                                      { return ElmTypes.IN; }
+<YYINITIAL> "data"                                      { return ElmTypes.DATA; }
+<YYINITIAL> "type"                                      { return ElmTypes.TYPE; }
+<YYINITIAL> "module"                                      { return ElmTypes.MODULE; }
+<YYINITIAL> "where"                                      { return ElmTypes.WHERE; }
+<YYINITIAL> "import"                                      { return ElmTypes.IMPORT; }
+<YYINITIAL> "as"                                      { return ElmTypes.AS; }
+<YYINITIAL> "hiding"                                      { return ElmTypes.HIDING; }
+<YYINITIAL> "open"                                      { return ElmTypes.OPEN; }
+<YYINITIAL> "export"                                      { return ElmTypes.EXPORT; }
+<YYINITIAL> "foreign"                                      { return ElmTypes.FOREIGN; }
+
+
 <YYINITIAL> "="                                        { return ElmTypes.EQUALS; }
 <YYINITIAL> ":"                                        { return ElmTypes.COLON; }
+<YYINITIAL> ".."                                        { return ElmTypes.DOTDOT; }
+<YYINITIAL> "."                                        { return ElmTypes.DOT; }
+<YYINITIAL> "("                                        { return ElmTypes.LPAREN; }
+<YYINITIAL> ")"                                        { return ElmTypes.RPAREN; }
 
 <YYINITIAL> {IDENTIFIER}                                    { return ElmTypes.IDENTIFIER; }
 
