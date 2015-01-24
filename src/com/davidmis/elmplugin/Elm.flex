@@ -108,4 +108,4 @@ NUMBER = [0-9]* | ([0-9]* [.]+ [0-9]+)
 
 <YYINITIAL> {NUMBER}                                        { return ElmTypes.NUMBER; }
 
-<YYINITIAL> .                                               { return ElmTypes.WAITING; }
+<YYINITIAL> .                                               { return TokenType.BAD_CHARACTER; }

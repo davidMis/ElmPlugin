@@ -31,9 +31,12 @@ public class ElmColorSettingsPage implements ColorSettingsPage {
     @NotNull
     @Override
     public String getDemoText() {
-        return "-- This is a comment\n" +
-                "{-- This is a comment too! --}\n" +
-                "This is garbage";
+        return "import Graphics.Element (..) \n" +
+               "import Text (..) \n\n\n" +
+                "--Simple example program\n\n" +
+               "main : Element\n" +
+                "main = " +
+                "plainText \"Hello, World!\"";
     }
 
     @Nullable

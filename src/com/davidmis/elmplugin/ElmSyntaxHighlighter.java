@@ -19,7 +19,6 @@ import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAtt
 
 public class ElmSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey COMMENT = createTextAttributesKey("ELM_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
-    public static final TextAttributesKey WAITING = createTextAttributesKey("ELM_WAITING", new TextAttributes(Color.WHITE, null, null, null, Font.PLAIN));
     public static final TextAttributesKey IDENTIFIER = createTextAttributesKey("ELM_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
     public static final TextAttributesKey NUMBER = createTextAttributesKey("ELM_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
     public static final TextAttributesKey STRING = createTextAttributesKey("ELM_STRING", DefaultLanguageHighlighterColors.STRING);
@@ -43,12 +42,12 @@ public class ElmSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey EXPORT = createTextAttributesKey("ELM_EXPORT", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey FOREIGN = createTextAttributesKey("ELM_FOREIGN", DefaultLanguageHighlighterColors.KEYWORD);
 
-    public static final TextAttributesKey COLON = createTextAttributesKey("ELM_COLON", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-    public static final TextAttributesKey EQUALS = createTextAttributesKey("ELM_EQUALS", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-    public static final TextAttributesKey DOTDOT = createTextAttributesKey("ELM_DOTDOT", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-    public static final TextAttributesKey LPAREN = createTextAttributesKey("ELM_LPAREN", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-    public static final TextAttributesKey RPAREN = createTextAttributesKey("ELM_RPAREN", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-    public static final TextAttributesKey DOT = createTextAttributesKey("ELM_DOT", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    public static final TextAttributesKey COLON = createTextAttributesKey("ELM_COLON", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
+    public static final TextAttributesKey EQUALS = createTextAttributesKey("ELM_EQUALS", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
+    public static final TextAttributesKey DOTDOT = createTextAttributesKey("ELM_DOTDOT", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
+    public static final TextAttributesKey LPAREN = createTextAttributesKey("ELM_LPAREN", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
+    public static final TextAttributesKey RPAREN = createTextAttributesKey("ELM_RPAREN", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
+    public static final TextAttributesKey DOT = createTextAttributesKey("ELM_DOT", DefaultLanguageHighlighterColors.PREDEFINED_SYMBOL);
 
 
     static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("ELM_BAD_CHARACTER",
@@ -56,7 +55,7 @@ public class ElmSyntaxHighlighter extends SyntaxHighlighterBase {
 
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
-    private static final TextAttributesKey[] WAITING_KEYS = new TextAttributesKey[]{WAITING};
+    private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
     private static final TextAttributesKey[] IDENTIFIER_KEYS = new TextAttributesKey[]{IDENTIFIER};
     private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
     private static final TextAttributesKey[] RESERVED_KEYS = new TextAttributesKey[]{IF,THEN,ELSE,CASE,OF,LET,IN,DATA,TYPE,MODULE,
@@ -73,13 +72,14 @@ public class ElmSyntaxHighlighter extends SyntaxHighlighterBase {
     @NotNull
     @Override
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        System.out.println("Token type: " + tokenType);
         if (tokenType.equals(ElmTypes.COMMENT)) {
             return COMMENT_KEYS;
         } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
             return BAD_CHAR_KEYS;
         } else if (tokenType.equals(ElmTypes.NUMBER)) {
             return NUMBER_KEYS;
+        } else if (tokenType.equals(ElmTypes.STRING)) {
+            return STRING_KEYS;
         } else if (
                 tokenType.equals(ElmTypes.COLON) || tokenType.equals(ElmTypes.EQUALS) || tokenType.equals(ElmTypes.DOTDOT) ||
                 tokenType.equals(ElmTypes.LPAREN) || tokenType.equals(ElmTypes.RPAREN)|| tokenType.equals(ElmTypes.DOT)) {
@@ -94,8 +94,6 @@ public class ElmSyntaxHighlighter extends SyntaxHighlighterBase {
             return RESERVED_KEYS;
         } else if (tokenType.equals(ElmTypes.IDENTIFIER)) {
             return IDENTIFIER_KEYS;
-        } else if (tokenType.equals(ElmTypes.WAITING)) {
-            return WAITING_KEYS;
         } else {
             return EMPTY_KEYS;
         }
