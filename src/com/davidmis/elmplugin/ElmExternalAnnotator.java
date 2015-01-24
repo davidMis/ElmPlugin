@@ -4,7 +4,9 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.ExternalAnnotator;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,23 +19,25 @@ import java.util.ListIterator;
 public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator.InitialInfo, List<ElmError>> {
     public class InitialInfo {
         public Document document;
-        public String path;
+        public VirtualFile vfile;
 
-        public InitialInfo(Document d, String p) {
+        public InitialInfo(Document d, VirtualFile v) {
             document = d;
-            path = p;
+            vfile = v;
         }
     }
 
     @Nullable
     public InitialInfo collectInformation(@NotNull PsiFile file, @NotNull Editor editor, boolean hasErrors) {
-        return hasErrors ? null : new InitialInfo(editor.getDocument(), file.getVirtualFile().getPath());
+        return hasErrors ? null : new InitialInfo(editor.getDocument(), file.getVirtualFile());
     }
 
     @Nullable
     public List<ElmError> doAnnotate(InitialInfo info) {
-        System.out.println("Checking: " + info.path + "    ---------------------------------------");
-        String compilerOutput = ElmChecker.instance.getCompilerOutput(info.path);
+        FileDocumentManager.getInstance().saveDocument(info.document);
+
+        System.out.println("Checking: " + info.vfile.getPath() + "    ---------------------------------------");
+        String compilerOutput = ElmChecker.instance.getCompilerOutput(info.vfile.getPath());
         System.out.println(compilerOutput);
         System.out.println("------------------------------------------------------");
 
