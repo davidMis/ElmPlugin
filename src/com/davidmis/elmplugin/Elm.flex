@@ -4,11 +4,21 @@ import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.davidmis.elmplugin.psi.ElmTypes;
 import com.intellij.psi.TokenType;
+import java.util.LinkedList;
 
 %%
 
 %{
-    int commentLevel = 0;
+   private final LinkedList<Integer> states = new LinkedList();
+
+   private void yypushstate(int state) {
+       states.addFirst(yystate());
+       yybegin(state);
+   }
+   private void yypopstate() {
+       final int state = states.removeFirst();
+       yybegin(state);
+   }
 %}
 
 %class ElmLexer
@@ -16,7 +26,8 @@ import com.intellij.psi.TokenType;
 %unicode
 %function advance
 %type IElementType
-%eof{  return;
+%eof{
+    return;
 %eof}
 
 CRLF = \n|\r|\r\n
@@ -28,22 +39,25 @@ END_COMMENT = ("--}")
 
 %%
 
-<YYINITIAL> {SINGLE_LINE_COMMENT}                           { return ElmTypes.COMMENT; }
+<YYINITIAL> {SINGLE_LINE_COMMENT}                           { yybegin(YYINITIAL); return ElmTypes.COMMENT; }
 
-<YYINITIAL, INCOMMENT> {START_COMMENT}                      { yybegin(INCOMMENT);
-                                                              commentLevel += 1;
+<YYINITIAL, INCOMMENT> {START_COMMENT}                      {  yypushstate(INCOMMENT);
+
+
                                                               yypushback(2);
                                                               return ElmTypes.COMMENT; }
 
+
+
+
 <INCOMMENT> . | {CRLF}                               { yybegin(INCOMMENT);return ElmTypes.COMMENT; }
 
-<INCOMMENT> {END_COMMENT}                                   { yybegin(INCOMMENT);
-                                                              commentLevel -= 1;
-                                                              if(commentLevel <= 0) { yybegin(YYINITIAL); }
+<INCOMMENT> {END_COMMENT}                                   {
+                                                              yypopstate();
                                                               return ElmTypes.COMMENT; }
 
 
 
-{CRLF}                                                      { yybegin(YYINITIAL); return ElmTypes.CRLF; }
+<YYINITIAL> {CRLF}                                                      { yybegin(YYINITIAL); return ElmTypes.CRLF; }
 
-.                                                           { return ElmTypes.WAITING; }
+<YYINITIAL> .                                                           { yybegin(YYINITIAL); return ElmTypes.WAITING; }
