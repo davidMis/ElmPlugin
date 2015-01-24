@@ -13,8 +13,16 @@
   tokenTypeClass="com.davidmis.elmplugin.psi.ElmTokenType"
 }
 
-elmFile ::= item_*
+elmFile ::= (declaration|statement|COMMENT|CRLF|WHITESPACE|WAITING)*
 
-private item_ ::= (COMMENT|CRLF|WAITING)
+declaration ::= IDENTIFIER WHITESPACE? COLON WHITESPACE? type
+
+type ::= IDENTIFIER (WHITESPACE? ARROW WHITESPACE? type)*
+
+statement ::= IDENTIFIER WHITESPACE? EQUALS WHITESPACE? expression
+
+expression ::= if_expression|simple_expression
+simple_expression ::= IDENTIFIER|NUMBER
+if_expression ::= IF WHITESPACE expression WHITESPACE THEN WHITESPACE expression WHITESPACE ELSE WHITESPACE expression
 
 property ::= (KEY? SEPARATOR VALUE?) | KEY

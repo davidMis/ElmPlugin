@@ -25,39 +25,67 @@ import java.util.LinkedList;
 %implements FlexLexer
 %unicode
 %function advance
+%caseless
 %type IElementType
 %eof{
     return;
 %eof}
 
-CRLF = \n|\r|\r\n
+CRLF = (\n|\r|\r\n)+
+WHITESPACE = {CRLF} | [ \t\f]*
+
+/* Comments */
 SINGLE_LINE_COMMENT = ("--") [^\r\n]*
 START_COMMENT = ("{--")
 END_COMMENT = ("--}")
+
+/* Strings */
+
+/* Expressions */
+
+/* Declaration */
+
+/* General */
+IDENTIFIER = [:letter:] [A-Za-z0-9'_]*
+NUMBER = [0-9]* | ([0-9]* [.]+ [0-9]+)
+//RESERVED = "if"     | "then" | "else" | "case" | "of" |"let" | "in" |"data" | "type" | "module" |
+//           "where"  |"import" |  "as" | "hiding" | "open" |"export" | "foreign"
+
 
 %xstate INCOMMENT
 
 %%
 
-<YYINITIAL> {SINGLE_LINE_COMMENT}                           { yybegin(YYINITIAL); return ElmTypes.COMMENT; }
+/* Comments */
+<YYINITIAL> {SINGLE_LINE_COMMENT}                           { return ElmTypes.COMMENT; }
 
-<YYINITIAL, INCOMMENT> {START_COMMENT}                      {  yypushstate(INCOMMENT);
-
-
+<YYINITIAL, INCOMMENT> {START_COMMENT}                      { yypushstate(INCOMMENT);
                                                               yypushback(2);
                                                               return ElmTypes.COMMENT; }
 
+<INCOMMENT> [^\-\{\}]* | .                                  { return ElmTypes.COMMENT; }
 
-
-
-<INCOMMENT> . | {CRLF}                               { yybegin(INCOMMENT);return ElmTypes.COMMENT; }
-
-<INCOMMENT> {END_COMMENT}                                   {
-                                                              yypopstate();
+<INCOMMENT> {END_COMMENT}                                   { yypopstate();
                                                               return ElmTypes.COMMENT; }
 
 
+/* Strings */
 
-<YYINITIAL> {CRLF}                                                      { yybegin(YYINITIAL); return ElmTypes.CRLF; }
 
-<YYINITIAL> .                                                           { yybegin(YYINITIAL); return ElmTypes.WAITING; }
+/* General */
+
+<YYINITIAL> {WHITESPACE}                                { return ElmTypes.WHITESPACE; }
+
+<YYINITIAL> "if"                                      { return ElmTypes.IF; }
+<YYINITIAL> "then"                                      { return ElmTypes.THEN; }
+<YYINITIAL> "else"                                      { return ElmTypes.ELSE; }
+<YYINITIAL> "="                                        { return ElmTypes.EQUALS; }
+<YYINITIAL> ":"                                        { return ElmTypes.COLON; }
+
+<YYINITIAL> {IDENTIFIER}                                    { return ElmTypes.IDENTIFIER; }
+
+<YYINITIAL> {NUMBER}                                        { return ElmTypes.NUMBER; }
+
+<YYINITIAL> {CRLF}                                          { return ElmTypes.CRLF; }
+
+<YYINITIAL> .                                               { return ElmTypes.WAITING; }
