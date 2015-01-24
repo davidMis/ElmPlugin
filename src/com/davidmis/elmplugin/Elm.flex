@@ -40,6 +40,9 @@ START_COMMENT = ("{--")
 END_COMMENT = ("--}")
 
 /* Strings */
+STRING = {QUOTED_STRING} | {TRIPLE_QUOTED_STRING}
+QUOTED_STRING = "\"" [^\r\n]* [^\\]"\""
+TRIPLE_QUOTED_STRING = "\"\"\"" ~"\"\"\""
 
 /* Expressions */
 
@@ -52,7 +55,6 @@ NUMBER = [0-9]* | ([0-9]* [.]+ [0-9]+)
 
 
 %xstate INCOMMENT
-
 %%
 
 /* Comments */
@@ -102,8 +104,8 @@ NUMBER = [0-9]* | ([0-9]* [.]+ [0-9]+)
 
 <YYINITIAL> {IDENTIFIER}                                    { return ElmTypes.IDENTIFIER; }
 
-<YYINITIAL> {NUMBER}                                        { return ElmTypes.NUMBER; }
+<YYINITIAL> {STRING}                                    { return ElmTypes.STRING; }
 
-<YYINITIAL> {CRLF}                                          { return ElmTypes.CRLF; }
+<YYINITIAL> {NUMBER}                                        { return ElmTypes.NUMBER; }
 
 <YYINITIAL> .                                               { return ElmTypes.WAITING; }

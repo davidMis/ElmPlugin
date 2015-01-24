@@ -26,7 +26,8 @@ library_name ::= IDENTIFIER (DOT IDENTIFIER)* WHITESPACE? library_list?
 library_list ::= LPAREN WHITESPACE? DOTDOT WHITESPACE? RPAREN
 
 expression ::= if_ex | simple_ex
-simple_ex ::= IDENTIFIER|NUMBER
+simple_ex ::= function_application|IDENTIFIER|NUMBER|STRING
+function_application ::= IDENTIFIER WHITESPACE (IDENTIFIER|STRING|NUMBER|function_application)
 if_ex ::= IF WHITESPACE expression WHITESPACE THEN WHITESPACE expression WHITESPACE ELSE WHITESPACE expression
 
 property ::= (KEY? SEPARATOR VALUE?) | KEY

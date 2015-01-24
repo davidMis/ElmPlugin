@@ -22,8 +22,10 @@ public class ElmSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey WAITING = createTextAttributesKey("ELM_WAITING", new TextAttributes(Color.WHITE, null, null, null, Font.PLAIN));
     public static final TextAttributesKey IDENTIFIER = createTextAttributesKey("ELM_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
     public static final TextAttributesKey NUMBER = createTextAttributesKey("ELM_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
-    public static final TextAttributesKey IF = createTextAttributesKey("ELM_IF", DefaultLanguageHighlighterColors.KEYWORD);
+    public static final TextAttributesKey STRING = createTextAttributesKey("ELM_STRING", DefaultLanguageHighlighterColors.STRING);
 
+
+    public static final TextAttributesKey IF = createTextAttributesKey("ELM_IF", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey THEN = createTextAttributesKey("ELM_THEN", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey ELSE = createTextAttributesKey("ELM_ELSE", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey CASE = createTextAttributesKey("ELM_IF", DefaultLanguageHighlighterColors.KEYWORD);
