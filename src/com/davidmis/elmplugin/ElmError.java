@@ -22,6 +22,12 @@ public class ElmError {
         setIndecis(document);
     }
 
+    public ElmError(int startIndex, int endIndex, String message) {
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
+        this.message = message;
+    }
+
     public int getLine() {
         return line;
     }

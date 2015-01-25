@@ -36,18 +36,11 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
     public List<ElmError> doAnnotate(InitialInfo info) {
         FileDocumentManager.getInstance().saveDocument(info.document);
 
+        // TODO replace with Logger
         System.out.println("Checking: " + info.vfile.getPath() + "    ---------------------------------------");
         String compilerOutput = ElmChecker.instance.getCompilerOutput(info.vfile.getPath());
         System.out.println(compilerOutput);
         System.out.println("------------------------------------------------------");
-
-
-//        List<ElmError> errors = new LinkedList<ElmError>();
-//
-//        ElmError testError = new ElmError(2,3,5,"Test error");
-//        testError.setIndecis(info.document);
-//
-//        errors.add(testError);
 
         return getErrors(compilerOutput, info.document);
     }
@@ -58,6 +51,8 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
         String[] lines = compilerOutput.split("\n");
         for(int i = 0; i < lines.length; i++) {
             String line = lines[i];
+
+            /* Handle "Could not find variable" Error */
             if(line.startsWith("Error on line")) {
                 int errLine = Integer.parseInt(line.split("line ")[1].split(",")[0]) - 1;
                 int errStartCol = Integer.parseInt(line.split("column ")[1].split(" to")[0]) - 1;
@@ -66,7 +61,17 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
                 i += 1;
 
                 errors.add(new ElmError(errLine, errStartCol, errEndCol, errMessage, document));
+            }
 
+            /* Handle "Could not find module" Error */
+            if(line.contains("Could not find module")) {
+                String moduleName = line.split("Could not find module '")[1].split("'")[0];
+                String fileText = document.getText();
+                int errStartIndex = fileText.indexOf(moduleName, fileText.indexOf("import"));
+                int errEndIndex = errStartIndex + moduleName.length();
+                String errMessage = lines[i];
+
+                errors.add(new ElmError(errStartIndex, errEndIndex, errMessage));
             }
         }
 
