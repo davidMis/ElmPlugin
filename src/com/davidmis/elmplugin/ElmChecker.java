@@ -3,9 +3,6 @@ package com.davidmis.elmplugin;
 import java.io.*;
 import java.util.Arrays;
 
-/**
- * Created by david on 1/24/15.
- */
 public class ElmChecker {
     public static ElmChecker instance = new ElmChecker();
 
@@ -38,14 +35,5 @@ public class ElmChecker {
         }
 
         return "";
-    }
-
-    public static void main(String[] args) {
-        String pathToElm = "elm-make";
-        String filename = "/Users/david/Projects/Elm/Test/test-err.elm";
-
-        ElmChecker checker = new ElmChecker();
-
-        System.out.println(checker.getCompilerOutput(pathToElm, filename));
     }
 }
