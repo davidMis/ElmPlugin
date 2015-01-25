@@ -2,6 +2,7 @@ package com.davidmis.elmplugin;
 
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.ExternalAnnotator;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
@@ -28,13 +29,21 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
     }
 
     @Nullable
-    public InitialInfo collectInformation(@NotNull PsiFile file, @NotNull Editor editor, boolean hasErrors) {
+    public InitialInfo collectInformation(@NotNull PsiFile file, @NotNull final Editor editor, boolean hasErrors) {
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                FileDocumentManager.getInstance().saveDocument(editor.getDocument());
+            }
+        });
+//      FileDocumentManager.getInstance().saveDocument(editor.getDocument());
+
         return hasErrors ? null : new InitialInfo(editor.getDocument(), file.getVirtualFile());
     }
 
     @Nullable
     public List<ElmError> doAnnotate(InitialInfo info) {
-        FileDocumentManager.getInstance().saveDocument(info.document);
+     //   FileDocumentManager.getInstance().saveDocument(info.document);
 
         // TODO replace with Logger
         System.out.println("Checking: " + info.vfile.getPath() + "    ---------------------------------------");
