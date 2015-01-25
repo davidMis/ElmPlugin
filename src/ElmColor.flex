@@ -21,7 +21,7 @@ import java.util.LinkedList;
    }
 %}
 
-%class ElmLexer
+%class ElmColorLexer
 %implements FlexLexer
 %unicode
 %function advance
@@ -76,29 +76,26 @@ NUMBER = [0-9]* | ([0-9]* [.]+ [0-9]+)
 
 <YYINITIAL> {WHITESPACE}                                { return ElmTypes.WHITESPACE; }
 
-<YYINITIAL> "if"                                      { return ElmTypes.IF; }
-<YYINITIAL> "then"                                      { return ElmTypes.THEN; }
-<YYINITIAL> "else"                                      { return ElmTypes.ELSE; }
-<YYINITIAL> "case"                                      { return ElmTypes.CASE; }
-<YYINITIAL> "of"                                      { return ElmTypes.OF; }
-<YYINITIAL> "in"                                      { return ElmTypes.IN; }
-<YYINITIAL> "data"                                      { return ElmTypes.DATA; }
-<YYINITIAL> "type"                                      { return ElmTypes.TYPE; }
-<YYINITIAL> "module"                                      { return ElmTypes.MODULE; }
-<YYINITIAL> "where"                                      { return ElmTypes.WHERE; }
-<YYINITIAL> "import"                                      { return ElmTypes.IMPORT; }
-<YYINITIAL> "as"                                      { return ElmTypes.AS; }
-<YYINITIAL> "hiding"                                      { return ElmTypes.HIDING; }
-<YYINITIAL> "open"                                      { return ElmTypes.OPEN; }
-<YYINITIAL> "export"                                      { return ElmTypes.EXPORT; }
-<YYINITIAL> "foreign"                                      { return ElmTypes.FOREIGN; }
+<YYINITIAL>
+"if" | "then" | "else" | "case" | "of" | "in" |
+"data" | "type" | "module" | "where" | "import" |
+"as" | "hiding" | "open" | "export" | "foreign" |
+"type" | "alias" | "port"
+                                                            { return ElmTypes.KEYWORD; }
 
-<YYINITIAL> "="                                        { return ElmTypes.EQUALS; }
-<YYINITIAL> ":"                                        { return ElmTypes.COLON; }
-<YYINITIAL> ".."                                        { return ElmTypes.DOTDOT; }
-<YYINITIAL> "."                                        { return ElmTypes.DOT; }
-<YYINITIAL> "("                                        { return ElmTypes.LPAREN; }
-<YYINITIAL> ")"                                        { return ElmTypes.RPAREN; }
+<YYINITIAL>
+"True" | "False" | "Bool" | "Float" |
+"Char" | "String" | "Maybe" | "Just" | "Nothing" |
+"Int" | "Element" | "Signal" | "Ok" | "Err" | "Result" | "not"
+                                       {return ElmTypes.BUILTIN; }
+
+<YYINITIAL>
+"=" | ":" | ".." | "." | "++" |
+"not" | "::" | "-" | "/" | "\\" |
+"&&" | "||" | "+" | "^" | ">" | "<" |
+"->" | "|"  | "==" | "<|" | "|>" | "<~" | "~>" |
+"~" | "*" | "," | "{" | "}" | "(" | ")" | "[" | "]"
+                                        { return ElmTypes.OPERATOR; }
 
 <YYINITIAL> {IDENTIFIER}                                    { return ElmTypes.IDENTIFIER; }
 

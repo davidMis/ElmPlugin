@@ -36,15 +36,12 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
                 FileDocumentManager.getInstance().saveDocument(editor.getDocument());
             }
         });
-//      FileDocumentManager.getInstance().saveDocument(editor.getDocument());
 
         return hasErrors ? null : new InitialInfo(editor.getDocument(), file.getVirtualFile());
     }
 
     @Nullable
     public List<ElmError> doAnnotate(InitialInfo info) {
-     //   FileDocumentManager.getInstance().saveDocument(info.document);
-
         // TODO replace with Logger
         System.out.println("Checking: " + info.vfile.getPath() + "    ---------------------------------------");
         String compilerOutput = ElmChecker.instance.getCompilerOutput(info.vfile.getPath());

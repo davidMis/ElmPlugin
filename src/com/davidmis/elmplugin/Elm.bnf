@@ -34,3 +34,5 @@ property ::= (KEY? SEPARATOR VALUE?) | KEY
 
 reserved ::= IF | THEN | ELSE | CASE | OF | LET | IN | DATA | TYPE | MODULE |
              WHERE  | IMPORT |  AS | HIDING | OPEN | EXPORT | FOREIGN
+
+color_types ::= BUILTIN | KEYWORD | OPERATOR
