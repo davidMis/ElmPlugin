@@ -1,12 +1,15 @@
 <idea-plugin version="2">
   <id>com.davidmis.elmplugin</id>
-  <name>Elm Language Plugin</name>
+  <name>Elm Language Support</name>
   <version>0.1</version>
-  <vendor email="d.mis@gmail.com" url="http://davidmis.com">David Mis</vendor>
+  <vendor email="d.mis@gmail.com" url="">David Mis</vendor>
 
   <description><![CDATA[
       Support for Elm language.<br>
-      This plugin is still in development. It currently only supports syntax highlighting.
+
+      Currently supports syntax highlighting and basic error checking. You must have elm-make installed for this plugin to work.<br>
+
+      _This plugin is still in BETA._ Please understand that this is a very early release and there may be bugs on some systems.
     ]]></description>
 
   <change-notes><![CDATA[
@@ -14,7 +17,8 @@
       <ul>
         <li>Initial version.</li>
         <li>File recognition</li>
-        <li>Basic syntax highlighting<li>
+        <li>Basic syntax highlighting</li>
+        <li>Basic error annotations with the help of elm-make</li>
       </ul>
     ]]>
   </change-notes>
@@ -24,13 +28,13 @@
 
   <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
        on how to target different products -->
-  <!-- uncomment to enable plugin in all products
+
   <depends>com.intellij.modules.lang</depends>
-  -->
+
 
   <extensions defaultExtensionNs="com.intellij">
     <fileTypeFactory implementation="com.davidmis.elmplugin.ElmFileTypeFactory"/>
-<!--    <lang.parserDefinition language="Elm" implementationClass="com.davidmis.elmplugin.ElmParserDefinition"/> -->
+ <!--   <lang.parserDefinition language="Elm" implementationClass="com.davidmis.elmplugin.ElmParserDefinition"/> -->
     <lang.syntaxHighlighterFactory key="Elm" implementationClass="com.davidmis.elmplugin.ElmSyntaxHighlighterFactory"/>
     <colorSettingsPage implementation="com.davidmis.elmplugin.ElmColorSettingsPage"/>
 
