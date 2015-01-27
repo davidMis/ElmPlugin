@@ -45,7 +45,9 @@ public class ElmSettingsConfigurable implements Configurable {
             return;
         }
 
-        System.out.println("Path to elm-make: " + component.pathField.getText());
+        String newPath = component.pathField.getText();
+        ElmPersister.instance.setPathToElmMake(newPath);
+        System.out.println("Path to elm-make: " + newPath);
     }
 
     @Override

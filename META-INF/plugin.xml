@@ -6,11 +6,12 @@
 
   <description><![CDATA[
       Support for Elm language.<br><br>
-      <em>Please understand this plugin is still in BETA.</em> It is a very early release. There are probably bugs on some systems. I
-      am doing my best to make sure the plugin is stable and add more features. If you have any problems, please send me an
+      <em>Please understand this plugin is still in BETA.</em> It is a very early release, so there are probably bugs. I
+      am doing my best to make sure the plugin is stable and to add more features as quickly as possible. If you have any problems, please send me an
       e-mail and I will do my best to help you out. <br><br>
 
-      Currently supports syntax highlighting and basic error checking. You must have elm-make installed for this plugin to work.<br><br>
+      Currently supports syntax highlighting and basic error checking. You must have elm-make installed for this plugin to work.
+      Be sure the correct path to elm-make is set in "Settings/Preferences > Other Settings > Elm Language"<br><br>
 
       I want programming Elm on IDEA to be as fun as possible. I welcome all feedback and suggestions.
 ]]></description>
@@ -18,7 +19,7 @@
   <change-notes><![CDATA[
       Version 0.2
       <ul>
-        <li>Added Settings menu specify path to elm-make.</li>
+        <li>Added Settings menu to specify path to elm-make.</li>
       </ul>
 
       Version 0.1

@@ -9,10 +9,10 @@ public class ElmChecker {
     private ElmChecker() {}
 
     public String getCompilerOutput(String filename) {
-        return getCompilerOutput("elm-make", filename);
+        return getCompilerOutput(ElmPersister.instance.getPathToElmMake(), filename);
     }
 
-    public String getCompilerOutput(String pathToElm, String filename) {
+    private String getCompilerOutput(String pathToElm, String filename) {
         try {
             ProcessBuilder builder = new ProcessBuilder(pathToElm, filename, "--yes");
     //        builder.directory(new File(System.getProperty("java.io.tmpdir")));
