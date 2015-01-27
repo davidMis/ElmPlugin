@@ -1,8 +1,8 @@
 <idea-plugin version="2">
   <id>com.davidmis.elmplugin</id>
-  <name>Elm Language Support</name>
-  <version>0.2</version>
-  <vendor email="d.mis@gmail.com" url="">David Mis</vendor>
+  <name>Elm</name>
+  <version>0.2.1</version>
+  <vendor email="d.mis@gmail.com" url="https://github.com/davidMis/ElmPlugin">David Mis</vendor>
 
   <description><![CDATA[
       Support for Elm language.<br><br>
@@ -13,16 +13,25 @@
       Currently supports syntax highlighting and basic error checking. You must have elm-make installed for this plugin to work.
       Be sure the correct path to elm-make is set in "Settings/Preferences > Other Settings > Elm Language"<br><br>
 
+      There seems to be trouble when importing modules outside of elm-core. You can disable the error annotations in the
+      Settings menu if you are getting annoying false positives. Fixing those is my number one short-term priority.
+
       I want programming Elm on IDEA to be as fun as possible. I welcome all feedback and suggestions.
 ]]></description>
 
   <change-notes><![CDATA[
-      Version 0.2
+    Version 0.2.1
+      <ul>
+        <li>Can now disable error annotations in the Settings menu.</li>
+        <li>Now compatible with JDK 6+</li>
+      </ul>
+
+    Version 0.2
       <ul>
         <li>Added Settings menu to specify path to elm-make.</li>
       </ul>
 
-      Version 0.1
+    Version 0.1
       <ul>
         <li>Initial version.</li>
         <li>File recognition</li>
