@@ -8,6 +8,8 @@ public class ElmChecker {
 
     private ElmChecker() {}
 
+    private boolean runElmMake = true;
+
     public String getCompilerOutput(String filename) {
         return getCompilerOutput(ElmPersister.instance.getPathToElmMake(), filename);
     }

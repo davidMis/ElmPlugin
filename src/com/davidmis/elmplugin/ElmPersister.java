@@ -11,6 +11,7 @@ public class ElmPersister {
     private ElmPersister() {}
 
     private String pathToElmMake;
+    private String enableErrorChecking;
 
     public String getPathToElmMake() {
         if(pathToElmMake == null) {
@@ -22,7 +23,19 @@ public class ElmPersister {
 
     public void setPathToElmMake(String path) {
         pathToElmMake = path;
-        PropertiesComponent.getInstance().setValue("com.davidmis.elmplugin.pathToElmMake", path);
+        PropertiesComponent.getInstance().setValue("com.davidmis.elmplugin.pathToElmMake", pathToElmMake);
     }
 
+    public boolean getEnableErrorChecking() {
+        if(enableErrorChecking == null) {
+            enableErrorChecking = PropertiesComponent.getInstance().getValue("com.davidmis.elmplugin.enableErrorChecking", "T");
+        }
+
+        return enableErrorChecking.equalsIgnoreCase("T");
+    }
+
+    public void setEnableErrorChecking(boolean enabled) {
+        enableErrorChecking = enabled ? "T" : "F";
+        PropertiesComponent.getInstance().setValue("com.davidmis.elmplugin.enableErrorChecking", enableErrorChecking);
+    }
 }

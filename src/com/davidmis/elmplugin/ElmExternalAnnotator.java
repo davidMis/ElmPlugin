@@ -30,6 +30,11 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
 
     @Nullable
     public InitialInfo collectInformation(@NotNull PsiFile file, @NotNull Editor editor, boolean hasErrors) {
+        boolean enableErrorChecking = ElmPersister.instance.getEnableErrorChecking();
+        if(!enableErrorChecking) {
+            return null;
+        }
+
         saveDoc(editor);
 
         return new InitialInfo(editor.getDocument(), file.getVirtualFile());

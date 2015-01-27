@@ -41,13 +41,18 @@ public class ElmSettingsConfigurable implements Configurable {
 
     @Override
     public void apply() throws ConfigurationException {
-        if(component == null || component.pathField.getText() == null) {
+        if(component == null) {
             return;
         }
 
-        String newPath = component.pathField.getText();
+
+        String newPath = component.pathField.getText() == null ? "" : component.pathField.getText();
         ElmPersister.instance.setPathToElmMake(newPath);
         System.out.println("Path to elm-make: " + newPath);
+
+        Boolean errorCheckingEnabled = component.enableErrorCheckingCheckBox.isSelected();
+        ElmPersister.instance.setEnableErrorChecking(errorCheckingEnabled);
+        System.out.println("Error checking enabled " + errorCheckingEnabled);
     }
 
     @Override
