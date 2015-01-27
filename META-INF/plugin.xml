@@ -1,18 +1,26 @@
 <idea-plugin version="2">
   <id>com.davidmis.elmplugin</id>
   <name>Elm Language Support</name>
-  <version>0.1</version>
+  <version>0.2</version>
   <vendor email="d.mis@gmail.com" url="">David Mis</vendor>
 
   <description><![CDATA[
-      Support for Elm language.<br>
+      Support for Elm language.<br><br>
+      <em>Please understand this plugin is still in BETA.</em> It is a very early release. There are probably bugs on some systems. I
+      am doing my best to make sure the plugin is stable and add more features. If you have any problems, please send me an
+      e-mail and I will do my best to help you out. <br><br>
 
-      Currently supports syntax highlighting and basic error checking. You must have elm-make installed for this plugin to work.<br>
+      Currently supports syntax highlighting and basic error checking. You must have elm-make installed for this plugin to work.<br><br>
 
-      _This plugin is still in BETA._ Please understand that this is a very early release and there may be bugs on some systems.
-    ]]></description>
+      I want programming Elm on IDEA to be as fun as possible. I welcome all feedback and suggestions.
+]]></description>
 
   <change-notes><![CDATA[
+      Version 0.2
+      <ul>
+        <li>Added Settings menu specify path to elm-make.</li>
+      </ul>
+
       Version 0.1
       <ul>
         <li>Initial version.</li>
@@ -39,6 +47,7 @@
     <colorSettingsPage implementation="com.davidmis.elmplugin.ElmColorSettingsPage"/>
 
     <externalAnnotator language="Elm" implementationClass="com.davidmis.elmplugin.ElmExternalAnnotator"/>
+    <applicationConfigurable instance="com.davidmis.elmplugin.ElmSettingsConfigurable" />
   </extensions>
 
   <application-components>
