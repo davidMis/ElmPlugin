@@ -1,6 +1,6 @@
 <idea-plugin version="2">
   <id>com.davidmis.elmplugin</id>
-  <name>Elm</name>
+  <name>Elm Language Support</name>
   <version>0.2.1</version>
   <vendor email="d.mis@gmail.com" url="https://github.com/davidMis/ElmPlugin">David Mis</vendor>
 
@@ -23,6 +23,7 @@
     Version 0.2.1
       <ul>
         <li>Can now disable error annotations in the Settings menu.</li>
+        <li>Added helpful notification when elm-make fails</li>
         <li>Now compatible with JDK 6+</li>
       </ul>
 

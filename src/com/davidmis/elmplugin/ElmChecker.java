@@ -1,5 +1,9 @@
 package com.davidmis.elmplugin;
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
+
 import java.io.*;
 import java.util.Arrays;
 
@@ -8,7 +12,7 @@ public class ElmChecker {
 
     private ElmChecker() {}
 
-    private boolean runElmMake = true;
+    private boolean errorShownOnce = false;
 
     public String getCompilerOutput(String filename) {
         return getCompilerOutput(ElmPersister.instance.getPathToElmMake(), filename);
@@ -31,6 +35,12 @@ public class ElmChecker {
 
             return output.toString();
         } catch (IOException e) {
+            if(!errorShownOnce) {
+                errorShownOnce = true;
+                Notifications.Bus.notify(new Notification("External Executables Critical Failure", "Error running elm-make",
+                        "Could not run elm-make. Error checking disabled. Is the path configured in Settings > Other Settings > Elm Language?",
+                        NotificationType.ERROR));
+            }
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
