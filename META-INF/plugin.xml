@@ -14,7 +14,7 @@
       Be sure the correct path to elm-make is set in "Settings/Preferences > Other Settings > Elm Language"<br><br>
 
       There seems to be trouble when importing modules outside of elm-core. You can disable the error annotations in the
-      Settings menu if you are getting annoying false positives. Fixing those is my number one short-term priority.
+      Settings menu if you are getting annoying false positives. Fixing those is my number one short-term priority.<br><br>
 
       I want programming Elm on IDEA to be as fun as possible. I welcome all feedback and suggestions.
 ]]></description>
