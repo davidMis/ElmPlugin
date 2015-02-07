@@ -116,6 +116,20 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
 
                 errors.add(new ElmError(errLine, errStartCol, errEndCol, errMessage, document));
             }
+
+            /* Handle "Parse error" */
+            if(line.contains("Parse error at (line ")) {
+                int errLine = Integer.parseInt(line.split("line ")[1].split(",")[0]) - 1;
+                int errStartCol = Integer.parseInt(line.split("column ")[1].split("\\)")[0]) - 1;
+
+                i += 1;
+                String unexpected = lines[i].trim();
+                i += 1;
+                String expected = lines[i].trim();
+                String errMessage = unexpected + "; " + expected;
+
+                errors.add(new ElmError(errLine, errStartCol, errStartCol + 1, errMessage, document));
+            }
         }
 
         return errors;

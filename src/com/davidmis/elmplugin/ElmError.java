@@ -2,9 +2,6 @@ package com.davidmis.elmplugin;
 
 import com.intellij.openapi.editor.Document;
 
-/**
- * Created by david on 1/24/15.
- */
 public class ElmError {
     private int line;
     private int startCol;
