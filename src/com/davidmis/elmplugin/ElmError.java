@@ -3,7 +3,8 @@ package com.davidmis.elmplugin;
 import com.intellij.openapi.editor.Document;
 
 public class ElmError {
-    private int line;
+    private int startLine;
+    private int endLine;
     private int startCol;
     private int endCol;
     private String message;
@@ -11,7 +12,18 @@ public class ElmError {
     private int endIndex;
 
     public ElmError(int line, int startCol, int endCol, String message, Document document) {
-        this.line = line;
+        this.startLine = line;
+        this.endLine = line;
+        this.startCol = startCol;
+        this.endCol = endCol;
+        this.message = message;
+
+        setIndecis(document);
+    }
+
+    public ElmError(int startLine, int endLine, int startCol, int endCol, String message, Document document) {
+        this.startLine = startLine;
+        this.endLine = endLine;
         this.startCol = startCol;
         this.endCol = endCol;
         this.message = message;
@@ -23,10 +35,6 @@ public class ElmError {
         this.startIndex = startIndex;
         this.endIndex = endIndex;
         this.message = message;
-    }
-
-    public int getLine() {
-        return line;
     }
 
     public int getStartCol() {
@@ -46,7 +54,7 @@ public class ElmError {
     }
 
     private void setStartIndex(Document document) {
-        this.startIndex = document.getLineStartOffset(this.line) + this.startCol;
+        this.startIndex = document.getLineStartOffset(this.startLine) + this.startCol;
     }
 
     public int getEndIndex() {
@@ -54,7 +62,7 @@ public class ElmError {
     }
 
     private void setEndIndex(Document document) {
-        this.endIndex = document.getLineStartOffset(this.line) + this.endCol;
+        this.endIndex = document.getLineStartOffset(this.endLine) + this.endCol;
     }
 
     private void setIndecis(Document document) {

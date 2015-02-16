@@ -2,7 +2,7 @@
   <id>com.davidmis.elmplugin</id>
   <name>Elm Language Support</name>
   <version>0.2.1</version>
-  <vendor email="d.mis@gmail.com" url="https://github.com/davidMis/ElmPlugin">David Mis</vendor>
+  <vendor email="d.mis09@gmail.com" url="https://github.com/davidMis/ElmPlugin">David Mis</vendor>
 
   <description><![CDATA[
       Support for Elm language.<br><br>

@@ -110,12 +110,40 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
                 i += 2;
                 String expectedType = lines[i].trim();
                 i += 2;
-                String foundType = lines[i].trim();
+                String foundType = "";
+
+                while(!lines[i].contains("It is related to the following expression:")) {
+                    foundType += lines[i].trim() + "\n";
+                    i += 1;
+                }
                 String errMessage = "Expected type: " + expectedType + ", found: " + foundType;
                 i += 1;
 
                 errors.add(new ElmError(errLine, errStartCol, errEndCol, errMessage, document));
             }
+
+            /* Handle "Type mismatch" on multiple lines error */ // TODO
+//            if(line.contains("Type mismatch between the following types between lines ")) {
+//                int startLine = Integer.parseInt(line.split("lines ")[1].split("and")[0]) - 1;
+//                int endLine = Integer.parseInt(line.split("and")[1].split(":")[0]) - 1;
+//
+//                int errStartCol = Integer.parseInt(line.split("column ")[1].split(" to")[0]) - 1;
+//                int errEndCol = Integer.parseInt(line.split("to ")[1].split(":")[0]) - 1;
+//
+//                i += 2;
+//                String expectedType = lines[i].trim();
+//                i += 2;
+//                String foundType = "";
+//
+//                while(!lines[i].contains("It is related to the following expression:")) {
+//                    foundType += lines[i].trim() + "\n";
+//                    i += 1;
+//                }
+//                String errMessage = "Expected type: " + expectedType + ", found: " + foundType;
+//                i += 1;
+//
+//                errors.add(new ElmError(errLine, errStartCol, errEndCol, errMessage, document));
+//            }
 
             /* Handle "Parse error" */
             if(line.contains("Parse error at (line ")) {
@@ -130,6 +158,20 @@ public class ElmExternalAnnotator extends ExternalAnnotator<ElmExternalAnnotator
 
                 errors.add(new ElmError(errLine, errStartCol, errStartCol + 1, errMessage, document));
             }
+
+            /* Handle "Type Error: 'main' must have one of the the following types:" */ //TODO
+//            if(line.contains("Type Error: 'main' must have one of the following types:")) {
+//                int errLine = Integer.parseInt(line.split("line ")[1].split(",")[0]) - 1;
+//                int errStartCol = Integer.parseInt(line.split("column ")[1].split("\\)")[0]) - 1;
+//
+//                i += 1;
+//                String unexpected = lines[i].trim();
+//                i += 1;
+//                String expected = lines[i].trim();
+//                String errMessage = unexpected + "; " + expected;
+//
+//                errors.add(new ElmError(errLine, errStartCol, errStartCol + 1, errMessage, document));
+//            }
         }
 
         return errors;
