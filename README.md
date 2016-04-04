@@ -2,6 +2,6 @@
 IntelliJ IDEA plugin for the Elm language.
 
 ### This project is currently out-of-date.
-I have not been keeping up with the latest changes in Elm, nor have I implemented all the features you'd expect to see in a good language plugin.
+I will not be resuming work for forseeable future. Let me know if you would like to take over this project.
 
-I am resuming work on this plugin, but for the moment I recommend using vim or Sublime to code in Elm.
+There is another project located here: https://github.com/durkiewicz/elm-plugin
